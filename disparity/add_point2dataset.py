@@ -32,7 +32,7 @@ def press_keyboard(event):
         add_flag = True
     elif event.key == 'escape':
         print('exit')
-        save2file()
+        save2file(filename)
         exit(0)
 
 
@@ -44,30 +44,38 @@ def add_point(event, x_coordinate, y_coordinate, tag=None):
     event.inaxes.figure.canvas.draw()  # refresh the canvas
 
 
-def save2file():
+def save2file(filename):
     global result
     # create a file and save the coordinate into json format
-    suffix = filename_dc.split('_')[0]
+    # suffix = filename_dc.split('_')[0]
+    suffix = filename
     with open(folder + suffix+'.json', 'w') as f:
         json.dump(result, f)
 
 
 folder = 'datasets/'
 
+filename = '17a391b7-257f-4adc-8bf2-3a242495e05b'  # ok
+filename = '276d2ee1-186c-4b66-a6be-95afefbecdf6'
+filename = '25629260-2b35-4450-bf66-eb0b57bbb29f'
+filename = 'a3cd8ecc-e8fa-4ae2-9f7f-690c080ed827'
+filename = 'a5fb6082-d435-47e3-9663-fc3f3d07c5c1'
+filename = 'b8321512-2212-4780-914e-05680d9744f5'  # bad case
+filename = 'c23feefc-550e-4a28-b648-f1c0a7fbf15d'  # bad case
+filename = 'db01f50b-0329-43f8-b649-c0a9d175b8e2'
+
+
 fig = plt.figure()
-filename_dc = '17a391b7-257f-4adc-8bf2-3a242495e05b_dcBitmap.png'
-img_dc = Image.open(folder + filename_dc)
+img_dc = Image.open(folder + filename + '_dcBitmap.png')
 fig.canvas.mpl_connect('button_press_event', on_press)
 fig.canvas.mpl_connect('key_press_event', press_keyboard)
 plt.imshow(img_dc, animated=True)
 
-
-filename_msx = '17a391b7-257f-4adc-8bf2-3a242495e05b_msxBitmap.png'
-img_msx = Image.open(folder + filename_msx)
 fig2 = plt.figure()
-plt.imshow(img_msx)
+img_msx = Image.open(folder + filename + '_msxBitmap.png')
 fig2.canvas.mpl_connect('button_press_event', on_press_msx)
 fig2.canvas.mpl_connect('key_press_event', press_keyboard)
+plt.imshow(img_msx)
 
 plt.show()
 
